@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rhythm Paint Game</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="game-container">
+
+        <header>
+            <h1>Rhythm Paint Game</h1>
+
+            <div id="stats">
+                <div>Score: <span id="score">0</span></div>
+                <div>Combo: <span id="combo">0</span></div>
+                <div>Best: <span id="best-combo">0</span></div>
+            </div>
+        </header>
+
+        <main>
+
+            <!-- ステージ表示 -->
+            <div id="board-wrapper">
+                <div id="board"></div>
+            </div>
+
+            <!-- プレイヤー位置 -->
+            <div id="player-indicator">▲</div>
+
+        </main>
+
+        <footer>
+
+            <div id="controls">
+                <p>→ : 1マス進む</p>
+                <p>Space : マスを塗る</p>
+                <p>赤マスでSpaceを押すとゲームオーバー</p>
+            </div>
+
+            <div id="message"></div>
+
+            <button id="restart-button" hidden>
+                Restart
+            </button>
+
+        </footer>
+
+    </div>
+
+    <!-- 読み込み中表示 -->
+    <div id="loading">
+        リズムデータ読み込み中...
+    </div>
+
+    <!-- ゲーム本体 -->
+    <script src="script.js"></script>
+
+</body>
+</html>
