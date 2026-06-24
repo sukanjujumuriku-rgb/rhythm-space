@@ -252,16 +252,15 @@ function createStage() {
 
             stage.push({
 
-                red:
-                    pattern.red.includes(
-                        i
-                    ),
+    red:
+        pattern.red.includes(i),
 
-                painted: false
-                
-               　separator:
-                    i === pattern.length - 1
+    painted: false,
 
+    separator:
+        i === pattern.length - 1
+
+});
             });
         }
     }
