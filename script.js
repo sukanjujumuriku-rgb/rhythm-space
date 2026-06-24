@@ -371,42 +371,32 @@ function renderBoard() {
         "scrollToPlayer"
     );
 
-    scrollToPlayer();
+    updateBoardPosition();
 }
 /* =========================
    スクロール
 ========================= */
+function updateBoardPosition() {
 
-function scrollToPlayer() {
-
-    const current =
-        board.children[position];
-
-    if (!current) {
-
-        debug(
-            "current取得失敗"
+    const wrapper =
+        document.getElementById(
+            "board-wrapper"
         );
 
-        return;
-    }
+    const cellSize = 44;
 
-    try {
+    const center =
+        wrapper.clientWidth / 2;
 
-        current.scrollIntoView();
+    const offset =
+        center -
+        (position * cellSize) -
+        (cellSize / 2);
 
-        debug(
-            "scroll成功"
-        );
-
-    } catch (err) {
-
-        debug(
-            "scroll失敗 : "
-            + err.message
-        );
-    }
+    board.style.transform =
+        `translateX(${offset}px)`;
 }
+
 
 /* =========================
    スコア
