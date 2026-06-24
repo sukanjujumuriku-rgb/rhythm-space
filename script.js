@@ -258,6 +258,9 @@ function createStage() {
                     ),
 
                 painted: false
+                
+               　separator:
+                    i === pattern.length - 1
 
             });
         }
@@ -328,6 +331,13 @@ function renderBoard() {
             div.classList.add(
                 "cell"
             );
+           
+           if (cell.separator) {
+
+            div.classList.add(
+               "separator"
+            );
+            }
 
             if (
                 cell.red &&
