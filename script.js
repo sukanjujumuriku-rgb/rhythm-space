@@ -1,4 +1,4 @@
-```javascript
+
 const board = document.getElementById("board");
 const scoreElement = document.getElementById("score");
 const comboElement = document.getElementById("combo");
@@ -481,4 +481,3 @@ document.addEventListener(
 
     }
 );
-```
