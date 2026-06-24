@@ -1,0 +1,40 @@
+{
+  "easy": [
+    { "name": "easy01", "length": 16, "red": [4, 8, 12] },
+    { "name": "easy02", "length": 16, "red": [5, 10] },
+    { "name": "easy03", "length": 16, "red": [4, 12] },
+    { "name": "easy04", "length": 16, "red": [6, 12] },
+    { "name": "easy05", "length": 16, "red": [3, 9, 15] },
+    { "name": "easy06", "length": 16, "red": [7, 14] },
+    { "name": "easy07", "length": 16, "red": [4, 10] },
+    { "name": "easy08", "length": 16, "red": [8] },
+    { "name": "easy09", "length": 16, "red": [5, 13] },
+    { "name": "easy10", "length": 16, "red": [2, 8, 14] }
+  ],
+
+  "normal": [
+    { "name": "normal01", "length": 16, "red": [3, 7, 11] },
+    { "name": "normal02", "length": 16, "red": [2, 6, 10, 14] },
+    { "name": "normal03", "length": 16, "red": [4, 9, 14] },
+    { "name": "normal04", "length": 16, "red": [5, 8, 11, 14] },
+    { "name": "normal05", "length": 16, "red": [2, 7, 12] },
+    { "name": "normal06", "length": 16, "red": [1, 5, 9, 13] },
+    { "name": "normal07", "length": 16, "red": [3, 8, 13] },
+    { "name": "normal08", "length": 16, "red": [6, 10, 14] },
+    { "name": "normal09", "length": 16, "red": [2, 5, 11, 15] },
+    { "name": "normal10", "length": 16, "red": [4, 7, 10, 13] }
+  ],
+
+  "hard": [
+    { "name": "hard01", "length": 16, "red": [2, 5, 8, 11, 14] },
+    { "name": "hard02", "length": 16, "red": [1, 4, 7, 10, 13] },
+    { "name": "hard03", "length": 16, "red": [3, 5, 9, 12, 15] },
+    { "name": "hard04", "length": 16, "red": [2, 4, 7, 10, 12, 15] },
+    { "name": "hard05", "length": 16, "red": [1, 3, 6, 8, 11, 14] },
+    { "name": "hard06", "length": 16, "red": [2, 6, 9, 12, 15] },
+    { "name": "hard07", "length": 16, "red": [1, 5, 7, 10, 13, 15] },
+    { "name": "hard08", "length": 16, "red": [3, 6, 8, 11, 14] },
+    { "name": "hard09", "length": 16, "red": [2, 5, 7, 9, 12, 15] },
+    { "name": "hard10", "length": 16, "red": [1, 4, 6, 9, 11, 14] }
+  ]
+}
