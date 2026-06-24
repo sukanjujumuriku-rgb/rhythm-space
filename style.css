@@ -1,5 +1,4 @@
-/* 全体 */
-
+```css
 * {
     margin: 0;
     padding: 0;
@@ -7,164 +6,251 @@
 }
 
 body {
-    font-family: sans-serif;
-    background: #f0f0f0;
-    color: #222;
+
+    background: #ececec;
+
+    font-family:
+        "Segoe UI",
+        sans-serif;
+
     min-height: 100vh;
 
     display: flex;
     justify-content: center;
     align-items: center;
-}
 
-/* ゲーム本体 */
+    padding: 20px;
+}
 
 #game-container {
+
     width: 95%;
-    max-width: 1200px;
+    max-width: 1300px;
+
     background: white;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+
+    border-radius: 16px;
+
+    padding: 24px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,0.15);
 }
 
-/* タイトル */
+h1 {
 
-header h1 {
     text-align: center;
+
     margin-bottom: 15px;
 }
 
-/* スコア */
+#difficulty-container {
+
+    text-align: center;
+
+    margin-bottom: 15px;
+}
+
+#difficulty {
+
+    padding: 8px 12px;
+
+    font-size: 1rem;
+
+    cursor: pointer;
+}
 
 #stats {
+
     display: flex;
+
     justify-content: center;
+
     gap: 30px;
+
+    margin-bottom: 15px;
+
     font-size: 1.1rem;
-    margin-bottom: 20px;
+
+    font-weight: bold;
 }
 
-/* 盤面 */
+#timer {
+
+    text-align: center;
+
+    font-size: 1.4rem;
+
+    font-weight: bold;
+
+    margin-bottom: 10px;
+}
+
+#checkpoint-info {
+
+    text-align: center;
+
+    font-size: 1.1rem;
+
+    margin-bottom: 15px;
+}
 
 #board-wrapper {
-    position: relative;
 
     width: 100%;
+
     height: 120px;
 
-    overflow-x: hidden;
-    overflow-y: hidden;
+    overflow: hidden;
 
     border: 3px solid #333;
-    background: #ddd;
+
+    border-radius: 12px;
+
+    background: #dcdcdc;
 }
 
-/* マス列 */
-
 #board {
+
     display: flex;
+
     align-items: center;
 
+    gap: 4px;
+
     height: 100%;
+
     width: max-content;
 
     padding: 20px;
-    gap: 4px;
 }
 
-/* 基本マス */
-
 .cell {
+
     width: 40px;
     height: 40px;
 
     border: 2px solid #999;
+
     background: white;
 
     flex-shrink: 0;
 
     transition:
-        background-color 0.15s,
-        transform 0.15s;
+        transform 0.15s,
+        background-color 0.15s;
 }
 
-/* 塗ったマス */
+.cell.red {
+
+    background: #ff4b4b;
+}
 
 .cell.painted {
+
     background: black;
 }
 
-/* 危険マス */
-
-.cell.red {
-    background: #ff4444;
-}
-
-/* 現在位置 */
-
 .cell.current {
-    outline: 4px solid #3399ff;
-    transform: scale(1.08);
-}
 
-/* プレイヤー */
+    outline: 4px solid #3399ff;
+
+    transform: scale(1.1);
+}
 
 #player-indicator {
+
     text-align: center;
+
     font-size: 2rem;
+
     margin-top: 10px;
+
     user-select: none;
 }
 
-/* 操作説明 */
-
 #controls {
+
     margin-top: 20px;
+
     text-align: center;
+
     line-height: 1.8;
 }
 
-/* メッセージ */
-
 #message {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 1.4rem;
-    font-weight: bold;
+
     min-height: 40px;
+
+    margin-top: 20px;
+
+    text-align: center;
+
+    font-size: 1.5rem;
+
+    font-weight: bold;
 }
 
-/* リスタート */
-
 #restart-button {
+
     display: block;
 
     margin: 15px auto 0 auto;
 
-    padding: 10px 20px;
+    padding: 12px 24px;
+
+    border: none;
+
+    border-radius: 10px;
 
     font-size: 1rem;
 
-    border: none;
-    border-radius: 8px;
-
     cursor: pointer;
+
+    transition: transform 0.15s;
 }
 
-/* ローディング */
+#restart-button:hover {
+
+    transform: scale(1.05);
+}
 
 #loading {
+
     position: fixed;
 
     top: 15px;
     right: 15px;
 
-    background: black;
+    background: #111;
+
     color: white;
 
-    padding: 8px 14px;
-    border-radius: 8px;
+    padding: 10px 16px;
+
+    border-radius: 10px;
 
     font-size: 0.9rem;
+
+    z-index: 999;
 }
+
+@media (max-width: 768px) {
+
+    #stats {
+
+        flex-direction: column;
+
+        gap: 8px;
+
+        text-align: center;
+    }
+
+    .cell {
+
+        width: 32px;
+        height: 32px;
+    }
+}
+```
