@@ -250,7 +250,7 @@ function createStage() {
             i++
         ) {
 
-            stage.push({
+          stage.push({
 
     red:
         pattern.red.includes(i),
