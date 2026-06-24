@@ -263,3 +263,10 @@ h1 {
         height: 32px;
     }
 }
+
+
+.cell.separator {
+
+    border-right:
+        6px solid #222;
+}
