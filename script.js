@@ -53,13 +53,18 @@ async function init() {
         loadingElement.style.display =
             "none";
 
-    } catch (err) {
+    }catch (err) {
 
-        console.error(err);
+    console.error(err);
 
+    loadingElement.textContent =
+        "ERROR: " + err;
+
+    if (messageElement) {
         messageElement.textContent =
-            "データの読み込みに失敗しました";
+            "読み込み失敗";
     }
+}
 }
 
 /* =========================
