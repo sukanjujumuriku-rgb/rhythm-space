@@ -5,11 +5,11 @@ const comboElement = document.getElementById("combo");
 const bestComboElement = document.getElementById("best-combo");
 const messageElement = document.getElementById("message");
 const restartButton = document.getElementById("restart-button");
-const loadingElement = document.getElementById("loading");
 
 const difficultySelect = document.getElementById("difficulty");
 const timerElement = document.getElementById("timer");
 const checkpointElement = document.getElementById("checkpoint-info");
+const loadingElement = document.getElementById("loading");
 
 let rhythmData;
 let difficultyData;
@@ -24,20 +24,15 @@ let bestCombo = 0;
 let gameOver = false;
 let difficulty = "easy";
 
-/* ==========================
-   MYTHIC
-========================== */
-
 let checkpointTarget = 20;
 let checkpointProgress = 0;
-
 let timeRemaining = 0;
 
 let timerInterval = null;
 
-/* ==========================
+/* =========================
    起動
-========================== */
+========================= */
 
 window.addEventListener("load", init);
 
@@ -45,33 +40,38 @@ async function init() {
 
     try {
 
-        [rhythmData, difficultyData] = await Promise.all([
-            fetch("rhythms.json").then(r => r.json()),
-            fetch("difficulties.json").then(r => r.json())
-        ]);
+        [rhythmData, difficultyData] =
+            await Promise.all([
+                fetch("rhythms.json")
+                    .then(r => r.json()),
+                fetch("difficulties.json")
+                    .then(r => r.json())
+            ]);
 
         startGame();
 
-        loadingElement.style.display = "none";
+        loadingElement.style.display =
+            "none";
 
     } catch (err) {
 
         console.error(err);
 
         messageElement.textContent =
-            "データ読み込み失敗";
+            "データの読み込みに失敗しました";
     }
 }
 
-/* ==========================
-   ゲーム開始
-========================== */
+/* =========================
+   開始
+========================= */
 
 function startGame() {
 
     clearTimer();
 
-    difficulty = difficultySelect.value;
+    difficulty =
+        difficultySelect.value;
 
     position = 0;
     score = 0;
@@ -81,7 +81,8 @@ function startGame() {
     gameOver = false;
 
     checkpointTarget =
-        difficultyData.mythic.checkpointStart;
+        difficultyData.mythic
+            .checkpointStart;
 
     checkpointProgress = 0;
 
@@ -100,9 +101,9 @@ function startGame() {
     renderBoard();
 }
 
-/* ==========================
+/* =========================
    ステージ生成
-========================== */
+========================= */
 
 function createStage() {
 
@@ -118,30 +119,41 @@ function createStage() {
 
         const group =
             groups[
-                Math.floor(Math.random() * groups.length)
+                Math.floor(
+                    Math.random() *
+                    groups.length
+                )
             ];
 
-        const patterns = rhythmData[group];
+        const patterns =
+            rhythmData[group];
 
         const pattern =
             patterns[
-                Math.floor(Math.random() * patterns.length)
+                Math.floor(
+                    Math.random() *
+                    patterns.length
+                )
             ];
 
-        for (let i = 0; i < pattern.length; i++) {
+        for (
+            let i = 0;
+            i < pattern.length;
+            i++
+        ) {
 
             stage.push({
-                red: pattern.red.includes(i),
+                red:
+                    pattern.red.includes(i),
                 painted: false
             });
-
         }
     }
 }
 
-/* ==========================
+/* =========================
    難易度
-========================== */
+========================= */
 
 function currentDifficultyData() {
 
@@ -150,20 +162,27 @@ function currentDifficultyData() {
 
 function shouldShowRed(index) {
 
-    const diff = currentDifficultyData();
+    const diff =
+        currentDifficultyData();
 
     if (diff.showAllRed) {
+
         return true;
     }
 
-    const vision = diff.vision ?? 2;
+    const vision =
+        diff.vision ?? 2;
 
-    return Math.abs(index - position) <= vision;
+    return (
+        Math.abs(
+            index - position
+        ) <= vision
+    );
 }
 
-/* ==========================
+/* =========================
    描画
-========================== */
+========================= */
 
 function renderBoard() {
 
@@ -171,20 +190,33 @@ function renderBoard() {
 
     stage.forEach((cell, index) => {
 
-        const div = document.createElement("div");
+        const div =
+            document.createElement(
+                "div"
+            );
 
         div.classList.add("cell");
 
-        if (cell.red && shouldShowRed(index)) {
+        if (
+            cell.red &&
+            shouldShowRed(index)
+        ) {
+
             div.classList.add("red");
         }
 
         if (cell.painted) {
-            div.classList.add("painted");
+
+            div.classList.add(
+                "painted"
+            );
         }
 
         if (index === position) {
-            div.classList.add("current");
+
+            div.classList.add(
+                "current"
+            );
         }
 
         board.appendChild(div);
@@ -193,9 +225,9 @@ function renderBoard() {
     scrollToPlayer();
 }
 
-/* ==========================
+/* =========================
    スクロール
-========================== */
+========================= */
 
 function scrollToPlayer() {
 
@@ -211,26 +243,59 @@ function scrollToPlayer() {
     });
 }
 
-/* ==========================
+/* =========================
    スコア
-========================== */
+========================= */
 
 function updateScore() {
 
-    scoreElement.textContent = score;
-    comboElement.textContent = combo;
-    bestComboElement.textContent = bestCombo;
+    scoreElement.textContent =
+        score;
+
+    comboElement.textContent =
+        combo;
+
+    bestComboElement.textContent =
+        bestCombo;
 }
 
-/* ==========================
-   前進
-========================== */
+/* =========================
+   右へ進む
+========================= */
 
 function moveRight() {
 
     if (gameOver) return;
 
-    if (position >= stage.length - 1) {
+    const cell =
+        stage[position];
+
+    // 白マス未塗装
+    if (
+        !cell.red &&
+        !cell.painted
+    ) {
+
+        messageElement.textContent =
+            "先に塗ってください";
+
+        setTimeout(() => {
+
+            if (!gameOver) {
+
+                messageElement.textContent =
+                    "";
+            }
+
+        }, 1000);
+
+        return;
+    }
+
+    if (
+        position >=
+        stage.length - 1
+    ) {
 
         winGame();
         return;
@@ -240,7 +305,9 @@ function moveRight() {
 
     score++;
 
-    if (difficulty === "mythic") {
+    if (
+        difficulty === "mythic"
+    ) {
 
         checkpointProgress++;
 
@@ -258,42 +325,90 @@ function moveRight() {
     updateScore();
 
     renderBoard();
+
+    const currentCell =
+        stage[position];
+
+    if (
+        currentCell &&
+        currentCell.red
+    ) {
+
+        messageElement.textContent =
+            "SKIP!";
+
+        setTimeout(() => {
+
+            if (!gameOver) {
+
+                messageElement.textContent =
+                    "";
+            }
+
+        }, 500);
+    }
 }
 
-/* ==========================
+/* =========================
    塗る
-========================== */
+========================= */
 
 function paintCell() {
 
     if (gameOver) return;
 
-    const cell = stage[position];
+    const cell =
+        stage[position];
 
+    // 赤マスでSpace
     if (cell.red) {
 
         endGame(
-            "赤マスでSPACEを押しました"
+            "赤マスでSPACE"
         );
 
         return;
     }
 
-    if (!cell.painted) {
+    // 既に塗った
+    if (cell.painted) {
 
-        cell.painted = true;
+        return;
+    }
 
-        combo++;
+    cell.painted = true;
 
-        if (combo > bestCombo) {
-            bestCombo = combo;
-        }
+    combo++;
 
-        score += 10;
+    if (
+        combo > bestCombo
+    ) {
 
-    } else {
+        bestCombo = combo;
+    }
 
-        combo = 0;
+    score += 100;
+
+    // コンボボーナス
+    if (
+        combo % 10 === 0
+    ) {
+
+        score += 500;
+
+        messageElement.textContent =
+            combo +
+            " COMBO!";
+
+        setTimeout(() => {
+
+            if (!gameOver) {
+
+                messageElement.textContent =
+                    "";
+            }
+
+        }, 1000);
     }
 
     updateScore();
@@ -301,47 +416,62 @@ function paintCell() {
     renderBoard();
 }
 
-/* ==========================
+/* =========================
    MYTHIC
-========================== */
+========================= */
 
 function setupMythic() {
 
-    timerElement.textContent = "";
-    checkpointElement.textContent = "";
+    timerElement.textContent =
+        "";
 
-    if (difficulty !== "mythic") {
+    checkpointElement.textContent =
+        "";
+
+    if (
+        difficulty !== "mythic"
+    ) {
+
         return;
     }
 
     timeRemaining =
         checkpointTarget / 2;
 
+    updateTimer();
     updateCheckpoint();
 
-    timerInterval = setInterval(() => {
+    timerInterval =
+        setInterval(() => {
 
-        if (gameOver) return;
+            if (
+                gameOver
+            ) return;
 
-        timeRemaining -= 0.1;
+            timeRemaining -= 0.1;
 
-        updateTimer();
+            updateTimer();
 
-        if (timeRemaining <= 0) {
+            if (
+                timeRemaining <= 0
+            ) {
 
-            endGame(
-                "時間切れ"
-            );
-        }
+                endGame(
+                    "時間切れ"
+                );
+            }
 
-    }, 100);
+        }, 100);
 }
 
 function updateTimer() {
 
-    if (difficulty !== "mythic") {
+    if (
+        difficulty !== "mythic"
+    ) {
 
-        timerElement.textContent = "";
+        timerElement.textContent =
+            "";
 
         return;
     }
@@ -354,9 +484,12 @@ function updateTimer() {
 
 function updateCheckpoint() {
 
-    if (difficulty !== "mythic") {
+    if (
+        difficulty !== "mythic"
+    ) {
 
-        checkpointElement.textContent = "";
+        checkpointElement.textContent =
+            "";
 
         return;
     }
@@ -381,9 +514,8 @@ function checkpointClear() {
     timeRemaining =
         checkpointTarget / 2;
 
-    updateCheckpoint();
-
     updateTimer();
+    updateCheckpoint();
 
     messageElement.textContent =
         "CHECKPOINT CLEAR!";
@@ -399,9 +531,9 @@ function checkpointClear() {
     }, 1500);
 }
 
-/* ==========================
+/* =========================
    終了
-========================== */
+========================= */
 
 function endGame(reason) {
 
@@ -410,9 +542,11 @@ function endGame(reason) {
     clearTimer();
 
     messageElement.textContent =
-        "GAME OVER : " + reason;
+        "GAME OVER : " +
+        reason;
 
-    restartButton.hidden = false;
+    restartButton.hidden =
+        false;
 }
 
 function winGame() {
@@ -424,60 +558,68 @@ function winGame() {
     messageElement.textContent =
         "STAGE CLEAR!";
 
-    restartButton.hidden = false;
+    restartButton.hidden =
+        false;
 }
 
 function clearTimer() {
 
-    if (timerInterval) {
+    if (
+        timerInterval
+    ) {
 
-        clearInterval(timerInterval);
+        clearInterval(
+            timerInterval
+        );
 
         timerInterval = null;
     }
 }
 
-/* ==========================
-   リスタート
-========================== */
+/* =========================
+   UI
+========================= */
 
 restartButton.addEventListener(
     "click",
     startGame
 );
 
-/* ==========================
-   難易度変更
-========================== */
-
 difficultySelect.addEventListener(
     "change",
     startGame
 );
 
-/* ==========================
+/* =========================
    キー操作
-========================== */
+========================= */
 
 document.addEventListener(
     "keydown",
-    (event) => {
+    event => {
 
-        if (gameOver) return;
+        if (gameOver)
+            return;
 
-        if (event.code === "ArrowRight") {
+        if (
+            event.code ===
+            "ArrowRight"
+        ) {
 
             event.preventDefault();
 
             moveRight();
         }
 
-        if (event.code === "Space") {
+        if (
+            event.code ===
+            "Space"
+        ) {
 
             event.preventDefault();
 
             paintCell();
         }
-
     }
 );
+```
