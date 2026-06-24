@@ -1,0 +1,43 @@
+```json
+{
+  "easy": {
+    "showAllRed": true,
+    "timer": false,
+    "vision": 999,
+    "checkpointStart": 0,
+    "checkpointMultiplier": 1.0
+  },
+
+  "normal": {
+    "showAllRed": true,
+    "timer": false,
+    "vision": 999,
+    "checkpointStart": 0,
+    "checkpointMultiplier": 1.0
+  },
+
+  "hard": {
+    "showAllRed": true,
+    "timer": false,
+    "vision": 999,
+    "checkpointStart": 0,
+    "checkpointMultiplier": 1.0
+  },
+
+  "expert": {
+    "showAllRed": false,
+    "timer": false,
+    "vision": 2,
+    "checkpointStart": 0,
+    "checkpointMultiplier": 1.0
+  },
+
+  "mythic": {
+    "showAllRed": false,
+    "timer": true,
+    "vision": 2,
+    "checkpointStart": 20,
+    "checkpointMultiplier": 1.2
+  }
+}
+```
