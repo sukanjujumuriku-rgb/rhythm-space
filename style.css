@@ -1,0 +1,170 @@
+/* 全体 */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    background: #f0f0f0;
+    color: #222;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ゲーム本体 */
+
+#game-container {
+    width: 95%;
+    max-width: 1200px;
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+}
+
+/* タイトル */
+
+header h1 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* スコア */
+
+#stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+/* 盤面 */
+
+#board-wrapper {
+    position: relative;
+
+    width: 100%;
+    height: 120px;
+
+    overflow-x: hidden;
+    overflow-y: hidden;
+
+    border: 3px solid #333;
+    background: #ddd;
+}
+
+/* マス列 */
+
+#board {
+    display: flex;
+    align-items: center;
+
+    height: 100%;
+    width: max-content;
+
+    padding: 20px;
+    gap: 4px;
+}
+
+/* 基本マス */
+
+.cell {
+    width: 40px;
+    height: 40px;
+
+    border: 2px solid #999;
+    background: white;
+
+    flex-shrink: 0;
+
+    transition:
+        background-color 0.15s,
+        transform 0.15s;
+}
+
+/* 塗ったマス */
+
+.cell.painted {
+    background: black;
+}
+
+/* 危険マス */
+
+.cell.red {
+    background: #ff4444;
+}
+
+/* 現在位置 */
+
+.cell.current {
+    outline: 4px solid #3399ff;
+    transform: scale(1.08);
+}
+
+/* プレイヤー */
+
+#player-indicator {
+    text-align: center;
+    font-size: 2rem;
+    margin-top: 10px;
+    user-select: none;
+}
+
+/* 操作説明 */
+
+#controls {
+    margin-top: 20px;
+    text-align: center;
+    line-height: 1.8;
+}
+
+/* メッセージ */
+
+#message {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    min-height: 40px;
+}
+
+/* リスタート */
+
+#restart-button {
+    display: block;
+
+    margin: 15px auto 0 auto;
+
+    padding: 10px 20px;
+
+    font-size: 1rem;
+
+    border: none;
+    border-radius: 8px;
+
+    cursor: pointer;
+}
+
+/* ローディング */
+
+#loading {
+    position: fixed;
+
+    top: 15px;
+    right: 15px;
+
+    background: black;
+    color: white;
+
+    padding: 8px 14px;
+    border-radius: 8px;
+
+    font-size: 0.9rem;
+}
