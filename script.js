@@ -1,4 +1,3 @@
-
 const board = document.getElementById("board");
 const scoreElement = document.getElementById("score");
 const comboElement = document.getElementById("combo");
@@ -31,40 +30,103 @@ let timeRemaining = 0;
 let timerInterval = null;
 
 /* =========================
+   デバッグ
+========================= */
+
+function debug(text) {
+
+    console.log(text);
+
+    if (loadingElement) {
+
+        loadingElement.textContent =
+            text;
+    }
+}
+
+/* =========================
    起動
 ========================= */
 
-window.addEventListener("load", init);
+window.addEventListener(
+    "load",
+    init
+);
 
 async function init() {
 
     try {
 
-        [rhythmData, difficultyData] =
-            await Promise.all([
-                fetch("rhythms.json")
-                    .then(r => r.json()),
-                fetch("difficulties.json")
-                    .then(r => r.json())
-            ]);
+        debug(
+            "rhythms.json 読込中"
+        );
+
+        const rhythmResponse =
+            await fetch(
+                "rhythms.json"
+            );
+
+        debug(
+            "rhythms.json 取得成功"
+        );
+
+        rhythmData =
+            await rhythmResponse.json();
+
+        debug(
+            "rhythms.json 解析成功"
+        );
+
+        const diffResponse =
+            await fetch(
+                "difficulties.json"
+            );
+
+        debug(
+            "difficulties.json 取得成功"
+        );
+
+        difficultyData =
+            await diffResponse.json();
+
+        debug(
+            "difficulties.json 解析成功"
+        );
+
+        debug(
+            "startGame 実行"
+        );
 
         startGame();
 
-        loadingElement.style.display =
-            "none";
+        debug(
+            "ゲーム初期化成功"
+        );
 
-    }catch (err) {
+        setTimeout(() => {
 
-    console.error(err);
+            loadingElement.style.display =
+                "none";
 
-    loadingElement.textContent =
-        "ERROR: " + err;
+        }, 3000);
 
-    if (messageElement) {
-        messageElement.textContent =
-            "読み込み失敗";
+    } catch (err) {
+
+        console.error(err);
+
+        debug(
+            "ERROR : "
+            + err.name
+            + " : "
+            + err.message
+        );
+
+        if (messageElement) {
+
+            messageElement.textContent =
+                "読み込み失敗";
+        }
     }
-}
 }
 
 /* =========================
@@ -72,6 +134,10 @@ async function init() {
 ========================= */
 
 function startGame() {
+
+    debug(
+        "startGame 開始"
+    );
 
     clearTimer();
 
@@ -93,17 +159,39 @@ function startGame() {
 
     stage = [];
 
+    debug(
+        "ステージ生成"
+    );
+
     createStage();
+
+    debug(
+        "スコア更新"
+    );
 
     updateScore();
 
-    messageElement.textContent = "";
+    messageElement.textContent =
+        "";
 
-    restartButton.hidden = true;
+    restartButton.hidden =
+        true;
+
+    debug(
+        "難易度設定"
+    );
 
     setupMythic();
 
+    debug(
+        "描画"
+    );
+
     renderBoard();
+
+    debug(
+        "startGame 完了"
+    );
 }
 
 /* =========================
@@ -120,24 +208,39 @@ function createStage() {
         "hard"
     ];
 
-    for (let section = 0; section < 80; section++) {
+    for (
+        let section = 0;
+        section < 80;
+        section++
+    ) {
 
         const group =
             groups[
                 Math.floor(
-                    Math.random() *
-                    groups.length
+                    Math.random()
+                    * groups.length
                 )
             ];
 
         const patterns =
             rhythmData[group];
 
+        if (
+            !patterns ||
+            patterns.length === 0
+        ) {
+
+            throw new Error(
+                group +
+                " の譜面がありません"
+            );
+        }
+
         const pattern =
             patterns[
                 Math.floor(
-                    Math.random() *
-                    patterns.length
+                    Math.random()
+                    * patterns.length
                 )
             ];
 
@@ -148,12 +251,22 @@ function createStage() {
         ) {
 
             stage.push({
+
                 red:
-                    pattern.red.includes(i),
+                    pattern.red.includes(
+                        i
+                    ),
+
                 painted: false
+
             });
         }
     }
+
+    debug(
+        "生成マス数 : "
+        + stage.length
+    );
 }
 
 /* =========================
@@ -162,15 +275,21 @@ function createStage() {
 
 function currentDifficultyData() {
 
-    return difficultyData[difficulty];
+    return difficultyData[
+        difficulty
+    ];
 }
 
-function shouldShowRed(index) {
+function shouldShowRed(
+    index
+) {
 
     const diff =
         currentDifficultyData();
 
-    if (diff.showAllRed) {
+    if (
+        diff.showAllRed
+    ) {
 
         return true;
     }
@@ -191,45 +310,69 @@ function shouldShowRed(index) {
 
 function renderBoard() {
 
+    debug(
+        "描画開始"
+    );
+
     board.innerHTML = "";
 
-    stage.forEach((cell, index) => {
+    stage.forEach(
 
-        const div =
-            document.createElement(
-                "div"
-            );
+        (cell, index) => {
 
-        div.classList.add("cell");
-
-        if (
-            cell.red &&
-            shouldShowRed(index)
-        ) {
-
-            div.classList.add("red");
-        }
-
-        if (cell.painted) {
+            const div =
+                document.createElement(
+                    "div"
+                );
 
             div.classList.add(
-                "painted"
+                "cell"
+            );
+
+            if (
+                cell.red &&
+                shouldShowRed(
+                    index
+                )
+            ) {
+
+                div.classList.add(
+                    "red"
+                );
+            }
+
+            if (
+                cell.painted
+            ) {
+
+                div.classList.add(
+                    "painted"
+                );
+            }
+
+            if (
+                index ===
+                position
+            ) {
+
+                div.classList.add(
+                    "current"
+                );
+            }
+
+            board.appendChild(
+                div
             );
         }
 
-        if (index === position) {
+    );
 
-            div.classList.add(
-                "current"
-            );
-        }
-
-        board.appendChild(div);
-    });
+    debug(
+        "scrollToPlayer"
+    );
 
     scrollToPlayer();
 }
-
 /* =========================
    スクロール
 ========================= */
@@ -239,13 +382,30 @@ function scrollToPlayer() {
     const current =
         board.children[position];
 
-    if (!current) return;
+    if (!current) {
 
-    current.scrollIntoView({
-        behavior: "smooth",
-        inline: "center",
-        block: "nearest"
-    });
+        debug(
+            "current取得失敗"
+        );
+
+        return;
+    }
+
+    try {
+
+        current.scrollIntoView();
+
+        debug(
+            "scroll成功"
+        );
+
+    } catch (err) {
+
+        debug(
+            "scroll失敗 : "
+            + err.message
+        );
+    }
 }
 
 /* =========================
@@ -270,12 +430,12 @@ function updateScore() {
 
 function moveRight() {
 
-    if (gameOver) return;
+    if (gameOver)
+        return;
 
     const cell =
         stage[position];
 
-    // 白マス未塗装
     if (
         !cell.red &&
         !cell.painted
@@ -311,7 +471,8 @@ function moveRight() {
     score++;
 
     if (
-        difficulty === "mythic"
+        difficulty ===
+        "mythic"
     ) {
 
         checkpointProgress++;
@@ -360,12 +521,12 @@ function moveRight() {
 
 function paintCell() {
 
-    if (gameOver) return;
+    if (gameOver)
+        return;
 
     const cell =
         stage[position];
 
-    // 赤マスでSpace
     if (cell.red) {
 
         endGame(
@@ -375,7 +536,6 @@ function paintCell() {
         return;
     }
 
-    // 既に塗った
     if (cell.painted) {
 
         return;
@@ -386,15 +546,16 @@ function paintCell() {
     combo++;
 
     if (
-        combo > bestCombo
+        combo >
+        bestCombo
     ) {
 
-        bestCombo = combo;
+        bestCombo =
+            combo;
     }
 
     score += 100;
 
-    // コンボボーナス
     if (
         combo % 10 === 0
     ) {
@@ -434,7 +595,8 @@ function setupMythic() {
         "";
 
     if (
-        difficulty !== "mythic"
+        difficulty !==
+        "mythic"
     ) {
 
         return;
@@ -451,7 +613,10 @@ function setupMythic() {
 
             if (
                 gameOver
-            ) return;
+            ) {
+
+                return;
+            }
 
             timeRemaining -= 0.1;
 
@@ -472,7 +637,8 @@ function setupMythic() {
 function updateTimer() {
 
     if (
-        difficulty !== "mythic"
+        difficulty !==
+        "mythic"
     ) {
 
         timerElement.textContent =
@@ -482,7 +648,7 @@ function updateTimer() {
     }
 
     timerElement.textContent =
-        "残り時間: " +
+        "残り時間 : " +
         timeRemaining.toFixed(1) +
         "秒";
 }
@@ -490,7 +656,8 @@ function updateTimer() {
 function updateCheckpoint() {
 
     if (
-        difficulty !== "mythic"
+        difficulty !==
+        "mythic"
     ) {
 
         checkpointElement.textContent =
@@ -500,7 +667,10 @@ function updateCheckpoint() {
     }
 
     checkpointElement.textContent =
-        `Checkpoint ${checkpointProgress}/${checkpointTarget}`;
+        "Checkpoint "
+        + checkpointProgress
+        + "/"
+        + checkpointTarget;
 }
 
 function checkpointClear() {
@@ -510,7 +680,8 @@ function checkpointClear() {
     checkpointTarget =
         Math.round(
             checkpointTarget *
-            difficultyData.mythic
+            difficultyData
+                .mythic
                 .checkpointMultiplier
         );
 
@@ -540,18 +711,24 @@ function checkpointClear() {
    終了
 ========================= */
 
-function endGame(reason) {
+function endGame(
+    reason
+) {
 
     gameOver = true;
 
     clearTimer();
 
     messageElement.textContent =
-        "GAME OVER : " +
-        reason;
+        "GAME OVER : "
+        + reason;
 
     restartButton.hidden =
         false;
+
+    debug(
+        "GAME OVER"
+    );
 }
 
 function winGame() {
@@ -565,6 +742,10 @@ function winGame() {
 
     restartButton.hidden =
         false;
+
+    debug(
+        "STAGE CLEAR"
+    );
 }
 
 function clearTimer() {
@@ -577,7 +758,8 @@ function clearTimer() {
             timerInterval
         );
 
-        timerInterval = null;
+        timerInterval =
+            null;
     }
 }
 
@@ -601,10 +783,15 @@ difficultySelect.addEventListener(
 
 document.addEventListener(
     "keydown",
+
     event => {
 
-        if (gameOver)
+        if (
+            gameOver
+        ) {
+
             return;
+        }
 
         if (
             event.code ===
@@ -627,4 +814,3 @@ document.addEventListener(
         }
     }
 );
-```
