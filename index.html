@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -9,41 +10,111 @@
 </head>
 <body>
 
+    <div id="loading">
+        リズムデータ読み込み中...
+    </div>
+
     <div id="game-container">
 
         <header>
+
             <h1>Rhythm Paint Game</h1>
 
-            <div id="stats">
-                <div>Score: <span id="score">0</span></div>
-                <div>Combo: <span id="combo">0</span></div>
-                <div>Best: <span id="best-combo">0</span></div>
+            <div id="difficulty-container">
+
+                <label for="difficulty">
+                    Difficulty
+                </label>
+
+                <select id="difficulty">
+
+                    <option value="easy">
+                        EASY
+                    </option>
+
+                    <option value="normal">
+                        NORMAL
+                    </option>
+
+                    <option value="hard">
+                        HARD
+                    </option>
+
+                    <option value="expert">
+                        EXPERT
+                    </option>
+
+                    <option value="mythic">
+                        MYTHIC
+                    </option>
+
+                </select>
+
             </div>
+
+            <div id="stats">
+
+                <div>
+                    Score:
+                    <span id="score">0</span>
+                </div>
+
+                <div>
+                    Combo:
+                    <span id="combo">0</span>
+                </div>
+
+                <div>
+                    Best:
+                    <span id="best-combo">0</span>
+                </div>
+
+            </div>
+
+            <div id="timer"></div>
+
+            <div id="checkpoint-info"></div>
+
         </header>
 
         <main>
 
-            <!-- ステージ表示 -->
             <div id="board-wrapper">
+
                 <div id="board"></div>
+
             </div>
 
-            <!-- プレイヤー位置 -->
-            <div id="player-indicator">▲</div>
+            <div id="player-indicator">
+                ▲
+            </div>
 
         </main>
 
         <footer>
 
             <div id="controls">
-                <p>→ : 1マス進む</p>
-                <p>Space : マスを塗る</p>
-                <p>赤マスでSpaceを押すとゲームオーバー</p>
+
+                <p>
+                    → : 1マス進む
+                </p>
+
+                <p>
+                    SPACE : マスを塗る
+                </p>
+
+                <p>
+                    赤マスでSPACEを押すとゲームオーバー
+                </p>
+
             </div>
 
             <div id="message"></div>
 
-            <button id="restart-button" hidden>
+            <button
+                id="restart-button"
+                hidden
+            >
                 Restart
             </button>
 
@@ -51,13 +122,8 @@
 
     </div>
 
-    <!-- 読み込み中表示 -->
-    <div id="loading">
-        リズムデータ読み込み中...
-    </div>
-
-    <!-- ゲーム本体 -->
     <script src="script.js"></script>
 
 </body>
 </html>
+```
