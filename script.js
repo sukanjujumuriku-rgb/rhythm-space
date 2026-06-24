@@ -261,7 +261,7 @@ function createStage() {
         i === pattern.length - 1
 
 });
-            });
+            }
         }
     }
 
