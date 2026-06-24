@@ -458,8 +458,7 @@ function moveRight() {
 
     position++;
 
-    score++;
-
+    
     if (
         difficulty ===
         "mythic"
@@ -570,6 +569,8 @@ function paintCell() {
     updateScore();
 
     renderBoard();
+
+    moveRight();
 }
 
 /* =========================
