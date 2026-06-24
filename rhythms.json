@@ -1,3 +1,4 @@
+```json
 {
   "easy": [
     { "name": "easy01", "length": 16, "red": [4, 8, 12] },
@@ -35,6 +36,18 @@
     { "name": "hard07", "length": 16, "red": [1, 5, 7, 10, 13, 15] },
     { "name": "hard08", "length": 16, "red": [3, 6, 8, 11, 14] },
     { "name": "hard09", "length": 16, "red": [2, 5, 7, 9, 12, 15] },
-    { "name": "hard10", "length": 16, "red": [1, 4, 6, 9, 11, 14] }
+    { "name": "hard10", "length": 16, "red": [1, 4, 6, 9, 11, 14] },
+
+    { "name": "hard11", "length": 16, "red": [2, 4, 6, 8, 10, 12, 14] },
+    { "name": "hard12", "length": 16, "red": [1, 3, 5, 7, 9, 11, 13, 15] },
+    { "name": "hard13", "length": 16, "red": [2, 5, 8, 12, 15] },
+    { "name": "hard14", "length": 16, "red": [3, 6, 10, 13] },
+    { "name": "hard15", "length": 16, "red": [4, 6, 9, 11, 14] },
+    { "name": "hard16", "length": 16, "red": [1, 4, 8, 11, 15] },
+    { "name": "hard17", "length": 16, "red": [2, 7, 9, 12, 14] },
+    { "name": "hard18", "length": 16, "red": [3, 5, 8, 10, 13, 15] },
+    { "name": "hard19", "length": 16, "red": [1, 6, 8, 11, 13] },
+    { "name": "hard20", "length": 16, "red": [2, 4, 7, 9, 12, 14] }
   ]
 }
+```
